@@ -1,44 +1,57 @@
-%option noyywrap
 %{
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../parser/parser.tab.h"
+#include "ast.h"
+#include "parser.tab.h"
 
 int line_num = 1;
+int lexical_error_count = 0;
 %}
 
+%option noyywrap
+%x COMMENT
+
+DIGIT     [0-9]
+LETTER    [a-zA-Z_]
+ID        {LETTER}({LETTER}|{DIGIT})*
+INTLIT    {DIGIT}+
+FLOATLIT  {DIGIT}+"."{DIGIT}+
+
 %%
-"int"                { return INT; }
-"float"              { return FLOAT; }
-"bool"               { return BOOL; }
-"if"                 { return IF; }
-"else"               { return ELSE; }
-"while"              { return WHILE; }
-"print"              { return PRINT; }
-"true"               { yylval.bval = 1; return BOOLLIT; }
-"false"              { yylval.bval = 0; return BOOLLIT; }
 
-[0-9]+"."[0-9]+      { yylval.fval = atof(yytext); return FLOATLIT; }
-[0-9]+               { yylval.ival = atoi(yytext); return INTLIT; }
+"//".*                 { }
+"/*"                    { BEGIN(COMMENT); }
+<COMMENT>"*/"           { BEGIN(INITIAL); }
+<COMMENT>\n             { line_num++; }
+<COMMENT>.              { }
 
-[a-zA-Z_][a-zA-Z0-9_]* { yylval.str = strdup(yytext); return ID; }
+[ \t\r]+                { }
+\n                       { line_num++; }
 
-"=="                 { return EQ; }
-"!="                 { return NEQ; }
-"<="                 { return LE; }
-">="                 { return GE; }
-"&&"                 { return AND; }
-"||"                 { return OR; }
-"!"                  { return NOT; }
+"int"     { return INT; }
+"float"   { return FLOAT; }
+"bool"    { return BOOL; }
+"if"      { return IF; }
+"else"    { return ELSE; }
+"while"   { return WHILE; }
+"print"   { return PRINT; }
+"true"    { yylval.ival = 1; return BOOL_LIT; }
+"false"   { yylval.ival = 0; return BOOL_LIT; }
 
-[-+*/%<>=(){};]      { return yytext[0]; }
+"<="  { return LE; }
+">="  { return GE; }
+"=="  { return EQ; }
+"!="  { return NE; }
+"&&"  { return AND; }
+"||"  { return OR; }
 
-"//".*               { /* single-line comment, discard */ }
-"/*"([^*]|\*+[^*/])*\*+"/"  { /* block comment, discard */ }
+{FLOATLIT} { yylval.fval = atof(yytext); return FLOAT_LIT; }
+{INTLIT}   { yylval.ival = atoi(yytext); return INT_LIT; }
+{ID}       { yylval.strval = strdup(yytext); return ID; }
 
-[ \t\r]+             { /* whitespace, discard */ }
-\n                   { line_num++; }
+[+\-*/%<>=!(){};] { return yytext[0]; }
 
-.                    { printf("Lexical Error: invalid token '%s' at line %d\n", yytext, line_num); }
+.  { fprintf(stderr, "Lexical Error at line %d: unexpected character '%s'\n", line_num, yytext); lexical_error_count++; }
 %%
+
