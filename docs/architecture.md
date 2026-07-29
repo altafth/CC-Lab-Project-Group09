@@ -2,31 +2,33 @@
 
 ## Pipeline Overview
 
+```
 Source Code (.mc)
       |
       v
-+------------------+
-|  Lexical Analyzer | (Flex)  -->  Token Stream
-+------------------+
++--------------------+
+|  Lexical Analyzer  | (Flex)  -->  Token Stream
++--------------------+
       |
       v
-+------------------+
-|  Syntax Analyzer  | (Bison) -->  Abstract Syntax Tree (AST)
-+------------------+
++--------------------+
+|  Syntax Analyzer   | (Bison) -->  Abstract Syntax Tree (AST)
++--------------------+
       |
       v
-+------------------+
-| Semantic Analyzer | (Symbol Table + Type Checking) --> Validated AST
-+------------------+
++--------------------+
+| Semantic Analyzer  | (Symbol Table + Type Checking) --> Validated AST
++--------------------+
       |
       v
-+------------------+
-| Intermediate Code | (TAC Generator)
-|    Generation     |
-+------------------+
++--------------------+
+| Intermediate Code  | (TAC Generator)
+|    Generation      |
++--------------------+
       |
       v
 Three Address Code (TAC) Output
+```
 
 ## Module Responsibilities
 
