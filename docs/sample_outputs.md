@@ -7,10 +7,13 @@ Actual terminal output captured from running the compiler, for inclusion in the 
 
 ## 1. Valid Program — Full Pipeline
 
-Command:
+**Command:**
+```
 ./build/compiler examples/sample.mc
+```
 
-Output:
+**Output:**
+```
 ===== Lexical Analysis =====
 Lexical Analysis: SUCCESS (no lexical errors)
 ===== Parsing =====
@@ -97,44 +100,56 @@ t16 = false
 c = t16
 goto L2
 L3:
+```
 
 ---
 
 ## 2. Lexical Error Detection
 
-Command:
+**Command:**
+```
 ./build/compiler tests/lexical_error.mc
+```
 
-Output:
+**Output:**
+```
 ===== Lexical Analysis =====
 Lexical Error at line 8: unexpected character '$'
 Lexical Error at line 9: unexpected character '@'
 Lexical Error at line 10: unexpected character '#'
 Lexical Error at line 11: unexpected character '~'
 Lexical Analysis: FAILED (4 lexical error(s) found)
+```
 
 ---
 
 ## 3. Syntax Error Detection
 
-Command:
+**Command:**
+```
 ./build/compiler tests/syntax_error.mc
+```
 
-Output:
+**Output:**
+```
 ===== Parsing =====
 Syntax Error at line 3: syntax error
 Syntax Error at line 7: syntax error
 Syntax Error at line 11: syntax error
 Syntax Error at line 14: syntax error
+```
 
 ---
 
 ## 4. Semantic Error Detection
 
-Command:
+**Command:**
+```
 ./build/compiler tests/semantic_error.mc
+```
 
-Output:
+**Output:**
+```
 ===== Semantic Analysis =====
 Semantic Error at line 2: redeclaration of variable 'x'
 Semantic Error at line 5: undeclared variable 'undeclared_var'
@@ -142,3 +157,4 @@ Semantic Error at line 11: assignment to undeclared variable 'z'
 Semantic Error at line 14: cannot assign 'float' expression to 'bool' variable 'flag'
 Semantic Error at line 17: cannot assign 'bool' expression to 'int' variable 'a'
 Semantic Error at line 20: logical operators require bool operands
+```
