@@ -65,7 +65,7 @@ CC-Lab-Project/
 ├── tests/
 │   ├── valid_program.mc
 │   ├── scope_test.mc
-│   ├── all_types_scopes.mc
+│   ├
 │   ├── lexical_error.mc
 │   ├── syntax_error.mc
 │   ├── semantic_error.mc
@@ -211,9 +211,9 @@ AI tools (including Claude) were used during development for guidance, debugging
 
 | Name | Student ID | Contribution |
 |---|---|---|
-| [Altaf Hosen] | [231-115-108] | [Project Setup, lexer, semantic, symbol table, code generation(TAC), Driver/Integration, Documantation.] |
-| [Rakibul Islam Rafi] | [231-115-109] | [lexer, parser grammar, semantic, symbol table, Testing.] |
-| [Member 3] | [ID] | [Contribution] |
+| [Altaf Hosen] | [231-115-108 ] | [Project Setup, lexer, semantic, symbol table, code generation(TAC), Driver/Integration,Documantation.] |
+| [Rakibul Islam Rafi] | [231-115-109 ] | [lexer, parser grammar, semantic, symbol table, Testing.] |
+
 
 ---
 
